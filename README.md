@@ -1,15 +1,41 @@
 # PM10 Value Web Scraping
 
-Web Scraping Project in Python Jupyter Notebook, aimed for extracting the current level of PM10 in the atmosphere over the province of Bergamo in Italy. The daily updated information was found through the link below:
+Web Scraping Project in Python Jupyter Notebook, aimed for extracting the current levels of PM10 in the atmosphere over 11 different provinces in the region of Lombardy in Italy, as well as storing these data in a .csv file. The daily updated information was found through the link below:
 
 https://www.infoaria.regione.lombardia.it/infoaria/#/stato-attivazione
 
-In particular, I imported the necessary modules from the Selenium library as well as the Re module and set up Chrome options to run in headless mode, so that I avoid opening a browser window. Then, I set up the Chrome driver’s path (downloaded from https://chromedriver.chromium.org/downloads) to initialize Chrome browser with the specified service and options, and navigated to the website.
+In particular, the script's functionality can be broken down to the following 4 steps:
 
-After spending some time to inspect the desired value with the help of my browser’s developer tool, I found all elements with the tag name ‘strong’ and selected the first element in the list, which should always be the last updated one. I got the inner HTML of the selected ‘strong’ element and defined a regular expression pattern to match the number in the inner HTML. Then, I used the findall() method from the Re module to extract the number from the string.
+1. Importing the necessary libraries and modules:
 
-Finally, if the regular expression pattern finds a match in the extracted PM10 value string, the value gets converted to a float and printed to the console as the current PM10 level for the province of Bergamo. Otherwise, a dash is printed.
+    •	Selenium: for web scraping using the Chrome browser and
 
-Note that the .ipynb file can be run immediately on every machine where Anaconda Navigator in installed, however the path to the Chrome driver file needs to be adjusted according to where each individual has stored the relevant file in their machine.
+    •	Other modules for handling exceptions, regular expressions, csv operations, date formatting and data manipulation.
 
-Also note that the same script, with a single number change in the second line of the third cell (element = elements[...]), could be used for extracting other values of PM10 in different provinces/dates, according to one's interest.
+2. Defining the function 'PM10_Value_Web_Scraper()':
+
+    •	Sets up Chrome options to run in headless mode (without opening a browser window).
+
+    •	Initializes the Chrome browser using the ChromeDriver service and the specified options.
+
+    •	Navigates to the target webpage.
+
+    •	Retrieves the current date and formats it as a string.
+
+    •	Creates an empty list to store PM10 values for each province.
+
+    •	Loops through the provinces and extracts the PM10 value for each one using XPath.
+
+    •	Processes and converts the extracted values to decimal numbers.
+
+    •	Appends the PM10 values to the list, or adds 'None' if no value or a dash is found.
+
+    •	Quits the browser driver.
+
+3. Calling the function 'PM10_Value_Web_Scraper()' to perform the web scraping and store the data in a .csv file named 'PM10ValueWebScraperDataset.csv'.
+
+4. Reading and displaying the data from the .csv file into a Pandas dataframe.
+
+Please note that the script assumes the presence of ChromeDriver and specifies the file path for it. Additionally, it assumes the existence of the .csv file for storing the scraped data and also specifies its file path. Therefore, you may need to adjust these paths according to your local environment before running the script.
+
+Finally note that the script is intended to be run every day automatically, so that after some significant amount of time, we can have a dataset, ready for future analysis and valuable insights regarding the whole region of Lombardy in Italy.
